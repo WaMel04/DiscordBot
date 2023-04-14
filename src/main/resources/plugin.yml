@@ -1,0 +1,16 @@
+name: DiscordBot
+version: 1.1
+main: com.wamel.discordbot.DiscordBot
+description: '디스코드 인증 플러그인'
+authors:
+  - 'WaMel_'
+
+commands:
+  verify:
+    description: '디스코드 인증 명령어'
+  인증:
+    description: '디스코드 인증 명령어'
+  disbot:
+    description: '디스코드 봇 명령어'
+  dbot:
+    description: '디스코드 봇 명령어'
