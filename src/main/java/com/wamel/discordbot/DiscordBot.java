@@ -29,9 +29,14 @@ public class DiscordBot extends JavaPlugin implements Listener {
         instance = this;
 
         saveDefaultConfig();
+        ConfigManager$Config.load();
+
         registerCommands();
         registerEvents();
         registerBot();
+
+        if (!getServer().getPluginManager().isPluginEnabled(this))
+            return;
 
         Bukkit.getConsoleSender().sendMessage("§a플러그인이 활성화되었습니다. by WaMel_ (종현#7737)");
 
@@ -45,7 +50,8 @@ public class DiscordBot extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        JDAMain.getJDA().shutdownNow();
+        if (JDAMain.getJDA() != null)
+            JDAMain.getJDA().shutdownNow();
     }
 
     public static DiscordBot getInstance() {
@@ -63,16 +69,13 @@ public class DiscordBot extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new MinecraftEvent(), this);
     }
 
-    private void registerBot() {
-        try {
-            JDAMain.start();
-            Bukkit.getConsoleSender().sendMessage("§a봇이 활성화되었습니다.");
-        } catch (LoginException e) {
-            e.printStackTrace();
-            Bukkit.getConsoleSender().sendMessage("§c봇이 활성화에 실패했습니다!");
+    public static void registerBot() {
+        if (!JDAMain.start()) {
+            Bukkit.getConsoleSender().sendMessage("§c[DiscordBot] 봇 활성화에 실패했습니다! 플러그인을 비활성화합니다.");
+            DiscordBot.getInstance().getServer().getPluginManager().disablePlugin(DiscordBot.getInstance());
         }
-
     }
+
 
     // API
     public static void cleanMessage(String id) {

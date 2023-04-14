@@ -5,12 +5,17 @@ import com.wamel.discordbot.config.ConfigManager$Config;
 import com.wamel.discordbot.data.DataManager$Config;
 import com.wamel.discordbot.util.DiscordAPI;
 import com.wamel.discordbot.util.ReadEPF;
+import jdk.nashorn.internal.scripts.JD;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.*;
@@ -26,6 +31,27 @@ public class JDAListener extends ListenerAdapter {
     // 인증을 진행 중인 디스코드 유저 리스트
     public static HashMap<String, User> verifyCode = new HashMap<>();
     // 인증 코드 Map (인증 코드 , 디스코드 유저 ID)
+
+    @Override
+    public void onReady(ReadyEvent event) {
+        Bukkit.getConsoleSender().sendMessage("§a[DiscordBot] 봇이 활성화되었습니다.");
+
+        JDA jda = JDAMain.getJDA();
+
+        if (jda.getGuildById(DataManager$Config.GUILD_ID) == null) {
+            Bukkit.getConsoleSender().sendMessage("§c[DiscordBot] 올바르지 않은 길드 ID입니다. 길드 ID를 제대로 입력해주세요!");
+            Bukkit.getConsoleSender().sendMessage("§c[DiscordBot] 플러그인을 비활성화합니다.");
+            DiscordBot.getInstance().getServer().getPluginManager().disablePlugin(DiscordBot.getInstance());
+        }
+
+        Guild guild = jda.getGuildById(DataManager$Config.GUILD_ID);
+
+        if (DataManager$Config.ENABLE_MEMBER_INTENT && guild.getRoleById(DataManager$Config.VERIFY_ROLE) == null) {
+            Bukkit.getConsoleSender().sendMessage("§c[DiscordBot] 올바르지 않은 Role ID입니다. Role ID를 제대로 입력해주세요!");
+            Bukkit.getConsoleSender().sendMessage("§c[DiscordBot] 플러그인을 비활성화합니다.");
+            DiscordBot.getInstance().getServer().getPluginManager().disablePlugin(DiscordBot.getInstance());
+        }
+    }
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
@@ -49,6 +75,7 @@ public class JDAListener extends ListenerAdapter {
                         .addActionRow( Button.success("get-verify-code", "\uD83C\uDFAB 인증 코드 받기"))
                         .queue();
 
+                //event.reply("안녕하세요").setEphemeral(true).queue();
                 return;
             default:
                 break;

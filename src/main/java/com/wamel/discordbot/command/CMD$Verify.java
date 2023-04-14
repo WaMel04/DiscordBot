@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.HierarchyException;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -83,27 +82,25 @@ public class CMD$Verify implements CommandExecutor {
         DiscordAPI.sendPrivateMessageEmbed(user, embed);
         MinecraftEvent.unLinkedPlayerList.remove(player);
 
-        Guild guild = JDAMain.getJDA().getGuildById(DataManager$Config.GUILD_ID);
-        Member member = guild.getMemberById(user.getId());
+        if (DataManager$Config.ENABLE_MEMBER_INTENT) {
+            Guild guild = JDAMain.getJDA().getGuildById(DataManager$Config.GUILD_ID);
+            Member member = guild.getMemberById(user.getId());
 
-        if(DataManager$Config.GIVE_VERIFY_ROLE == true) {
-            Role role = guild.getRoleById(DataManager$Config.VERIFY_ROLE);
-
-            if(role == null) {
-                sender.sendMessage("§cverify-role 역할이 서버에 존재하지 않습니다! 관리자에게 문의해주세요.");
-                return false;
+            if(DataManager$Config.GIVE_VERIFY_ROLE) {
+                Role role = guild.getRoleById(DataManager$Config.VERIFY_ROLE);
+                guild.addRoleToMember(member, role).queue();
             }
-            guild.addRoleToMember(member, role).queue();
-        }
-        // 1.1 닉네임 변경
-        if(DataManager$Config.CHANGE_NICKNAME == true) {
-            try {
-                member.modifyNickname(player.getName()).queue();
-            } catch (HierarchyException e) {
-                player.sendMessage("§c인증을 완료한 플레이어가 봇과 동등, 혹은 그 이상의 권한을 가지고 있어 닉네임 변경에 실패했습니다!");
-                player.sendMessage("§c이 오류는 웬만하면 디스코드 관리자에게만 나타날 것입니다. 아니라면 개발자인 '종현#7737'로 연락해주세요.");
+            // 1.1 닉네임 변경
+            if(DataManager$Config.CHANGE_NICKNAME) {
+                try {
+                    member.modifyNickname(player.getName()).queue();
+                } catch (HierarchyException e) {
+                    player.sendMessage("§c인증을 완료한 플레이어가 봇과 동등, 혹은 그 이상의 권한을 가지고 있어 닉네임 변경에 실패했습니다!");
+                    player.sendMessage("§c이 오류는 웬만하면 디스코드 관리자에게만 나타날 것입니다. 아니라면 개발자인 'wamel04'로 연락해주세요.");
+                }
             }
         }
+
         return false;
     }
 }

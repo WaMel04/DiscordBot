@@ -6,7 +6,7 @@
 
     <groupId>com.wamel.discordbot</groupId>
     <artifactId>DiscordBot</artifactId>
-    <version>2.0</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>DiscordBot</name>
@@ -78,6 +78,11 @@
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>5.0.0-beta.5</version>
         </dependency>
     </dependencies>
 </project>

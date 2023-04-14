@@ -1,38 +1,47 @@
-# 디스코드 봇 플러그인 by WaMel_(종현#7737)
+# 디스코드 봇 플러그인 by WaMel_(discord: wamel04)
 # verify.bypass 권한이 있을 시 인증을 하지 않고 서버를 플레이할 수 있습니다.
 
-# 디스코드 봇 토큰
-# 절대 다른 사람에게 유출하지 마세요
+# 디스코드 봇 토큰입니다.
+# 절대 다른 사람에게 유출하지 마세요! 메모장 등에 적어두세요.
 token: TOKEN_HERE
 
-# 서버의 이름
-server-name: 나의 서버
-
-# 서버의 주소
-server-address: myserver.kr
-
-# 디스코드 길드 Id
+# 디스코드 서버(길드) ID입니다.
 guild-id: ID_HERE
 
-# 디스코드 주소
+# 서버의 이름입니다.
+server-name: 나의 서버
+
+# 서버의 주소입니다.
+server-address: myserver.kr
+
+# 디스코드 서버의 주소입니다.
 discord-address: https://discord.gg/MYDISCORDSERVER
 
-# 디스코드 프로필 주소
+# 디스코드 프로필의 주소입니다.
 discord-profile-address: https://cdn.discordapp.com/attachments/577089880954372096/1070760260480020650/2f037a1a16f98f67.png
 
 # 인증을 하지 않을 시 서버에서 움직일 수 없게합니다.
 prevent-moving: false
 
-# 인증시 디스코드 닉네임을 마인크래프트 닉네임으로 바꿉니다.
-change-nickname: false
-
-# 인증 완료시 Role을 부여합니다.
-give-verify-role: false
-
-# 인증 완료시 줄 Role의 Id
-verify-role: 1073892228998631494
-
-# 인증을 하지 않고도 사용가능한 명령어 목록
+# 인증을 하지 않고도 사용가능한 명령어 목록입니다.
 allowed-commands:
   - 인증
   - verify
+
+# =======================================================================================
+# 디스코드 서버 멤버 권한 요청
+# 활성화 시 닉네임 변경, 역할 변경 기능을 사용할 수 있습니다.
+# https://youtu.be/v3pDp2wxhBA?si=kphaKCuSuS-vteYD&t=37를 보고 설정을 따라해주세요!
+enable-member-intent: false
+
+# 인증 완료 시 디스코드 닉네임을 마인크래프트 닉네임으로 변경합니다.
+# enable-member-intent 필요
+change-nickname: false
+
+# 인증 완료시 Role을 부여합니다.
+# enable-member-intent 필요
+give-verify-role: false
+
+# 인증 완료시 줄 Role의 ID입니다.
+# enable-member-intent 필요
+verify-role: 1073892228998631494
