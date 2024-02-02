@@ -44,8 +44,14 @@ public class CMD$Verify implements CommandExecutor {
             player.sendMessage(" §9§l<< §f§l인증 도움말 §9§l>>");
             player.sendMessage("");
             if(ConfigManager$Config.getDiscordId(player.getUniqueId().toString()) != null) {
-                User user = DiscordAPI.getDiscordUser((Long) ConfigManager$Config.getDiscordId(player.getUniqueId().toString()));
-                player.sendMessage(" §f당신은 이미 인증을 완료했습니다. §b연동된 디스코드 계정: " + user.getAsTag());
+                Long id = (Long) ConfigManager$Config.getDiscordId(player.getUniqueId().toString());
+
+                if (id == -1) {
+                    player.sendMessage(" §c당신은 인증을 하지 않았지만, 관리자에 의해 플레이가 가능합니다.");
+                } else {
+                    User user = DiscordAPI.getDiscordUser(id);
+                    player.sendMessage(" §f당신은 이미 인증을 완료했습니다. §b연동된 디스코드 계정: " + user.getAsTag());
+                }
             } else {
                 player.sendMessage(" §f디스코드 인증을 하셔야 서버 플레이가 가능합니다.");
                 player.sendMessage(" §b디스코드 주소: §f" + DataManager$Config.DISCORD_ADDRESS);

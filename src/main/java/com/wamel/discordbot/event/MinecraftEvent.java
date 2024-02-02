@@ -47,6 +47,8 @@ public class MinecraftEvent implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
+        unLinkedPlayerList.remove(player);
+
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             JDAMain.getJDA().getPresence().setActivity(Activity.playing(Bukkit.getOnlinePlayers().size() + "명이 서버를 플레이"));
         }, 1L);

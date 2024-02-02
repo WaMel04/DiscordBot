@@ -20,6 +20,7 @@ public class CMD$Disbot$Reload extends CMD$Disbot{
         sender.sendMessage(" §7discord-address: " + DataManager$Config.DISCORD_ADDRESS);
         sender.sendMessage(" §7discord-profile-address: " + DataManager$Config.DISCORD_PROFILE_ADDRESS);
         sender.sendMessage(" §7prevent-moving: " + DataManager$Config.PREVENT_MOVING);
+        sender.sendMessage(" §7enable-member-intent: " + DataManager$Config.ENABLE_MEMBER_INTENT);
         sender.sendMessage(" §7change-nickname: " + DataManager$Config.CHANGE_NICKNAME);
         sender.sendMessage(" §7give-verify-role: " + DataManager$Config.GIVE_VERIFY_ROLE);
         sender.sendMessage(" §7verify-role: " + DataManager$Config.VERIFY_ROLE);
